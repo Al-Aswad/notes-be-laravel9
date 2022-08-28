@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Note extends Model
+class NoteTag extends Model
 {
     use HasFactory, SoftDeletes, Uuid, Timestamp;
     public $incrementing = false;
