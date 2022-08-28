@@ -13,4 +13,9 @@ class Category extends Model
     use HasFactory, SoftDeletes, Uuid, Timestamp;
     public $incrementing = false;
     public $keyType = 'string';
+
+    protected $fillable = [
+        'name',
+        'description',
+    ];
 }

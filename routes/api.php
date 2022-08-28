@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\NoteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,5 +29,19 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('logout', 'logout');
         Route::post('refresh', 'refresh');
         Route::post('me', 'me');
+    });
+    Route::controller(NoteController::class)->group(function () {
+        Route::post('notes', 'create');
+        Route::get('notes', 'index');
+        Route::get('notes/{id}', 'show');
+        Route::put('notes/{id}', 'update');
+        Route::delete('notes/{id}', 'delete');
+    });
+    Route::controller(CategoryController::class)->group(function () {
+        Route::post('categories', 'create');
+        Route::get('categories', 'index');
+        Route::get('categories/{id}', 'show');
+        Route::put('categories/{id}', 'update');
+        Route::delete('categories/{id}', 'delete');
     });
 });
