@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\NoteController;
+use App\Http\Controllers\Api\TagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,5 +44,12 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('categories/{id}', 'show');
         Route::put('categories/{id}', 'update');
         Route::delete('categories/{id}', 'delete');
+    });
+    Route::controller(TagController::class)->group(function () {
+        Route::post('tags', 'create');
+        Route::get('tags', 'index');
+        Route::get('tags/{id}', 'show');
+        Route::put('tags/{id}', 'update');
+        Route::delete('tags/{id}', 'delete');
     });
 });
