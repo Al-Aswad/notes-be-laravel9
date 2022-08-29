@@ -59,7 +59,6 @@ class TagController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request->all());
         $request->validate([
             'name' => 'nullable|string|max:255',
             'avatar' => 'nullable|image',

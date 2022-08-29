@@ -14,6 +14,8 @@ use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens,Uuid, HasFactory, Notifiable;
+    public $incrementing = false;
+    public $keyType = 'string';
 
     /**
      * The attributes that are mass assignable.
