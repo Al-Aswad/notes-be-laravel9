@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('note_id');
             $table->uuid('tag_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

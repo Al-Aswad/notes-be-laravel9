@@ -10,7 +10,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class NoteTag extends Model
 {
-    use HasFactory, SoftDeletes, Uuid, Timestamp;
-    public $incrementing = false;
-    public $keyType = 'string';
+    use HasFactory, SoftDeletes, Timestamp;
+
+    protected $fillable = [
+        'note_id', 'tag_id'
+    ];
 }

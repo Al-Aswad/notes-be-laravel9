@@ -12,7 +12,7 @@ class NoteController extends Controller
 {
     public function index()
     {
-        $notes = Note::with('user', 'category')->get();
+        $notes = Note::with('user','category', 'tags')->get();
 
         return ResponseFormatter::success($notes, 'notes retrieved');
     }
@@ -22,6 +22,7 @@ class NoteController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'body' => 'required|string',
+            'category_id' => 'exists:categories,id',
             'tags' => 'nullable|array',
             'tags.*' => 'exists:tags,id',
         ]);
@@ -29,18 +30,27 @@ class NoteController extends Controller
         $note = Note::create([
             'title' => $request->title,
             'body' => $request->body,
+            'category_id' => $request->category_id ?? null,
             'user_id' => User::first()->id,
         ]);
 
         if ($request->tags) {
-            $note->tags()->attach($request->tags);
+            $note_tag = [];
+            foreach ($request->tags as $tag) {
+                $note_tag[] = [
+                    'note_id' => $note->id,
+                    'tag_id' => $tag,
+                ];
+            }
+
+            $note->tags()->createMany($note_tag);
         }
         return ResponseFormatter::success($note, 'note created');
     }
 
     public function show($id)
     {
-        $note = Note::find($id);
+        $note = Note::with('user','category', 'tags')->find($id);
 
         if ($note) {
             return ResponseFormatter::success($note, 'Note found');
