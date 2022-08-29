@@ -7,9 +7,15 @@ use App\Http\Controllers\Controller;
 use App\Models\Note;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NoteController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['index', 'show']]);
+    }
+
     public function index()
     {
         $notes = Note::with('user','category', 'tags')->get();
@@ -31,7 +37,7 @@ class NoteController extends Controller
             'title' => $request->title,
             'body' => $request->body,
             'category_id' => $request->category_id ?? null,
-            'user_id' => User::first()->id,
+            'user_id' => Auth::guard('api')->user()->id,
         ]);
 
         if ($request->tags) {
